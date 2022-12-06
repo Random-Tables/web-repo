@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <!-- Google Fonts -->
+  <link
+    rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic"
+  />
+
+  <!-- CSS Reset -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"
+  />
+
+  <!-- Milligram CSS -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css"
+  />
+  <style>
+    .mt {
+      margin-top: 1rem;
+    }
+    .mt2 {
+      margin-top: 1rem;
+    }
+  </style>
+  <body class="container">
+    <h1 class="mt2">Welcome to the web repo for Random Tables</h1>
+
+    <h3>
+      Below is a list of all available utility & full tables, and the generator
+    </h3>
+
+    <h5>Contents</h5>
+    <ul>
+      <li><a href="#utility-tables">Utility Tables</a></li>
+      <li><a href="#full-tables">Full Tables</a></li>
+      <li><a href="#guide">Guide</a></li>
+    </ul>
+
+    <h5 id="full-tables" class="mt">Full Tables</h5>
+    <div class="" id="utility-parent"></div>
+
+    <h5 id="utility-tables" class="mt">Utility Tables</h5>
+    <div class="" id="full-table-parent"></div>
+
+    <h5 id="guide" class="mt2">Quickstart Guide</h5>
+
+    <p>guide...</p>
+  </body>
+  <script>
+    const utilityParent = document.getElementById("utility-parent");
+    const fullTableParent = document.getElementById("full-table-parent");
+
+    function buildHTML(name, id, parent) {
+      const Div = document.createElement("div");
+      const anchor = document.createElement("a");
+      const span = document.createElement("span");
+
+      const href = "/" + id + ".json";
+
+      Div.className = 'row';
+      anchor.innerText = name;
+      anchor.href = href;
+      anchor.className = "column column-50";
+      span.className = "column column-50";
+      span.innerText = window.location.origin + href;
+
+      Div.appendChild(anchor);
+      Div.appendChild(span);
+      parent.appendChild(Div);
+    }
+
+    function onLoad() {
+      const dataObj = data;
+
+      if (data.utility) {
+        dataObj.utility.map((tableData) => {
+          buildHTML(
+            tableData.collectionName,
+            tableData.collectionID,
+            utilityParent
+          );
+        });
+      }
+      if (data.tableset) {
+        dataObj.tableset.map((tableData) => {
+          buildHTML(
+            tableData.collectionName,
+            tableData.collectionID,
+            fullTableParent
+          );
+        });
+      }
+    }
+  </script>
+  <script type="text/javascript" src="pageData.js" onload="onLoad()"></script>
+  <script></script>
+</html>
