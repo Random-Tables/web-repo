@@ -34,25 +34,22 @@
 
     <h5>Contents</h5>
     <ul>
-      <li><a href="#utility-tables">Utility Tables</a></li>
       <li><a href="#full-tables">Full Tables</a></li>
+      <li><a href="#utility-tables">Utility Tables</a></li>
       <li><a href="#guide">Guide</a></li>
     </ul>
 
     <h5 id="full-tables" class="mt">Logic</h5>
     <div class="row">
-      <a href="/logic.js" class="column column-50"
-        >javascript logic</a
-      ><span class="column column-50"
-        >/logic.js</span
-      >
+      <a href="/logic.js" class="column column-50">javascript logic</a
+      ><span class="column column-50">/logic.js</span>
     </div>
 
     <h5 id="full-tables" class="mt">Full Tables</h5>
-    <div class="" id="utility-parent"></div>
+    <div class="" id="full-table-parent"></div>
 
     <h5 id="utility-tables" class="mt">Utility Tables</h5>
-    <div class="" id="full-table-parent"></div>
+    <div class="" id="utility-parent"></div>
 
     <h5 id="guide" class="mt2">Quickstart Guide</h5>
 
@@ -62,42 +59,81 @@
     const utilityParent = document.getElementById("utility-parent");
     const fullTableParent = document.getElementById("full-table-parent");
 
-    function buildHTML(name, id, parent) {
+    function expandButton(expandID) {
+      document.getElementById(expandID).style.display === "none"
+        ? (document.getElementById(expandID).style.display = "block")
+        : (document.getElementById(expandID).style.display = "none");
+    }
+
+    function buildHTML(name, id, tableList, parent) {
       const Div = document.createElement("div");
       const anchor = document.createElement("a");
       const span = document.createElement("span");
+      const button = document.createElement("button");
+      const DivExpand = document.createElement("div");
 
       const href = "/" + id + ".json";
 
       Div.className = "row";
       anchor.innerText = name;
       anchor.href = href;
-      anchor.className = "column column-50";
+      anchor.className = "column column-25";
       span.className = "column column-50";
       span.innerText = window.location.origin + href;
 
+      button.className = "column column-25";
+      button.style = "margin-bottom: 1rem";
+      button.innerText = "+ Tables";
+      button.id = id + "-btn";
+      button.onclick = () => expandButton(id + "-expand");
+
+      DivExpand.style.display = "none";
+      DivExpand.className = "column column-75 column-offset-25";
+      DivExpand.id = id + "-expand";
+
+      let tableData = "";
+      Object.keys(tableList).map((tableSetKey) => {
+        tableData += `<h5>${tableSetKey}</h5><p>`;
+
+        const len = tableList[tableSetKey].length;
+        tableList[tableSetKey].map((tableName, index) => {
+          tableData += `<span title="${id}/${tableSetKey}/${tableName}">${tableName}${
+            index !== len - 1 ? ", " : ""
+          }</span>`;
+        });
+
+        tableData += "</p>";
+      });
+      DivExpand.innerHTML = tableData;
+
       Div.appendChild(anchor);
       Div.appendChild(span);
+      Div.appendChild(button);
       parent.appendChild(Div);
+      parent.appendChild(DivExpand);
     }
 
     function onLoad() {
-      const dataObj = data;
+      // pageData added by pageData.js
+      const dataObj = pageData;
+      console.log("dataObj", dataObj);
 
-      if (data.utility) {
+      if (dataObj.utility) {
         dataObj.utility.map((tableData) => {
           buildHTML(
             tableData.collectionName,
             tableData.collectionID,
+            tableData.tableList,
             utilityParent
           );
         });
       }
-      if (data.tableset) {
-        dataObj.tableset.map((tableData) => {
+      if (dataObj.fullTable) {
+        dataObj.fullTable.map((tableData) => {
           buildHTML(
             tableData.collectionName,
             tableData.collectionID,
+            tableData.tableList,
             fullTableParent
           );
         });

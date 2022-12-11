@@ -13,15 +13,19 @@ const biome = require("@random-tables/biome");
 
 const write = require("write");
 
-const pageData = { utility: [], tableset: [] };
+const pageData = { utility: [], fullTable: [] };
 function addToPageData(indexObj) {
-  const { isUtility, collectionName, collectionID } = indexObj;
-  const dataObj = { collectionName, collectionID };
+  const { isUtility, collectionName, collectionID, tableData } = indexObj;
+  const tableList = {};
+  Object.keys(tableData).map((k) => {
+    tableList[k] = [...Object.keys(tableData[k])];
+  });
+  const dataObj = { collectionName, collectionID, tableList };
 
   if (isUtility) {
     pageData.utility.push(dataObj);
   } else {
-    pageData.tableset.push(dataObj);
+    pageData.fullTable.push(dataObj);
   }
 }
 
@@ -57,4 +61,4 @@ function addDataObj(dataindex) {
 
 // Data for web page
 const webPageData = JSON.stringify(pageData);
-write.sync("./dist/pageData.js", "const data = " + webPageData + ";", opt);
+write.sync("./dist/pageData.js", "const pageData = " + webPageData + ";", opt);
