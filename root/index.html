@@ -39,21 +39,72 @@
       <li><a href="#guide">Guide</a></li>
     </ul>
 
-    <h5 id="full-tables" class="mt">Logic</h5>
+    <h3 id="full-tables" class="mt">Logic</h3>
+    <p>Link below is for the javascript logic for generating random tables</p>
     <div class="row">
       <a href="/logic.js" class="column column-50">javascript logic</a
       ><span class="column column-50">/logic.js</span>
     </div>
+    <p>Logic has 5 functions is exposes under window.document.RandomTables</p>
+    <p>
+      window.document.RandomTables.buildIndex(arrayTables, onComplete, onError,
+      asyncFunction) Which takes 4 argument: Any array of table collections, a
+      function trigger on Completion of the the index being built, a function
+      that triggers if building the index errors, and an advanced use case
+      function for getting the Table's data asynchronously and on demand
+    </p>
+    <p>
+      window.document.RandomTables.appendIndex(table, onComplete, onError) it
+      takes a single table and adds it to the index, it can also take an
+      onComplete & an onError function
+    </p>
+    <p>
+      window.document.RandomTables.getCall("Collection/subTable/table") the
+      getCall function takes just one argument, a 'callString' which looks
+      though the built Index and returns a random table value, for 'Utility'
+      tables it returns a single string, and 'full' tables return an array,
+      these are lower on this page
+    </p>
+    <p>
+      window.document.RandomTables.getFromURLArray(URLArray, onComplete,
+      onError) this function allows you to build a random table index using
+      URL's as listed below, see the web-example to see it in use
+    </p>
+    <p>
+      window.document.RandomTables.inspectIndex() This function returns the
+      built index, it's useful for testing if you've built your index correctly.
+    </p>
 
-    <h5 id="full-tables" class="mt">Full Tables</h5>
+    <h3 id="full-tables" class="mt">Full Tables</h3>
+    <p>
+      Below are full tables which return an Array of descriptive values. Click
+      '+ tables' button to see the tables available, hovering over a table shows
+      you the 'callString' you can use to generate a result
+    </p>
     <div class="" id="full-table-parent"></div>
 
-    <h5 id="utility-tables" class="mt">Utility Tables</h5>
+    <h3 id="utility-tables" class="mt">Utility Tables</h3>
+    <p>
+      utility values return a single string and are intended to be used as a
+      sub-library for full tables. Click '+ tables' button to see the tables
+      available, hovering over a table shows you the 'callString' you can use to
+      generate a result
+    </p>
     <div class="" id="utility-parent"></div>
 
-    <h5 id="guide" class="mt2">Quickstart Guide</h5>
+    <h4 id="guide" class="mt2">Quickstart Guide</h4>
 
-    <p>guide...</p>
+    <p>
+      For an example see
+      <a href="https://random-tables-web-example.netlify.app/"
+        >random-tables-web-example</a
+      >, inspect the html which includes comments.
+    </p>
+    <p>
+      Alternatively if you know a bit about javascript development you can vist
+      the npm example repo
+      <a href="https://github.com/Random-Tables/npm-example">npm-example</a>
+    </p>
   </body>
   <script>
     const utilityParent = document.getElementById("utility-parent");
